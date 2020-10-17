@@ -2,12 +2,12 @@
   <div class="converter">
     <div class="container converter-row rates-list">
       <div v-for="curr in currRates" :key="curr" class="rates-list-item">
-          <div class="rates-list-item-top">
+          <div class="rates-list-item-top border">
             {{curr}}
             <country-flag :country='sliceEnd(curr)' size='normal'/>
           </div>
-          <div class="rates-list-item-bot">
-
+          <div class="rates-list-item-bot border">
+            {{getKeysToObject(curr)}}
           </div>
       </div>
     </div>
@@ -86,7 +86,10 @@ export default {
     },
     sliceEnd(str){
        let strSpl = str.slice(0,-1);
-      return strSpl;
+      return strSpl.toLowerCase();
+    },
+    getKeysToObject(rateKey){
+      return this.apiData.rates[rateKey].toFixed(5);
     }
   }
 }
