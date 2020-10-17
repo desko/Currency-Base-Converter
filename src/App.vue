@@ -1,11 +1,11 @@
 <template>
   <div id="app" class="wrapper"> 
-    <header class="border header-main-class">
+    <header class="header-main-class">
       <div class="header-logo"><img src="./logo.png" class="header-logo-image"></div>
       <div class="header-banner"><img src="./banner.png" class="header-banner"></div>
     </header>
     <main class="content-box">
-      <div class="m-side-bar border">
+      <div class="m-side-bar overflow-auto">
         <ul class="side-bar-list">
           <li v-for="curr in currList" :key="curr.abr" @click="setCurrency(curr.abr)" class="side-bar-list-item">
             <country-flag :country='curr.flag' size='normal'/>
@@ -13,12 +13,12 @@
           </li>
         </ul>
       </div>
-      <div class="m-content border">
+      <div class="m-content">
         <component :selectedCurr="selectedCurr" v-bind:is="component" :key="componentKey" @changeBase="setCurrency($event)"></component>
       </div>
     </main>
-    <footer class="border">
-      powered by: <a href="https://exchangeratesapi.io/">exchange rates api </a><br>Created by some debils
+    <footer class="footer-main">
+      powered by: <a href="https://exchangeratesapi.io/">exchange rates api </a>/ Created by some debils
     </footer>
   </div>
 </template>
@@ -63,6 +63,11 @@ html, body{
     margin: 0px;
     height: 100%;
 }
+body{
+  background-image: url("./bck.jpg");
+  background-size: cover;
+  background-repeat:no-repeat;
+}
 .wrapper {
     display: flex;
     flex-direction: column;
@@ -75,6 +80,7 @@ html, body{
   flex-direction: row;
   flex-wrap: nowrap;
   height: 10%;
+  background-color: rgba(42, 54, 70, 0.781);
 }
 .header-logo{
   width: 10%;
@@ -98,8 +104,11 @@ html, body{
     flex: 1 0 auto;
     height: 80%;
 }
-footer {
-    flex-shrink: 0;
+.footer-main {
+  flex-shrink: 0;
+  background-color: rgba(42, 54, 70, 0.781);
+  font-size: 1.6rem;
+  color: aliceblue;
 }
 .m-side-bar{
   width: 10%;
@@ -108,10 +117,10 @@ footer {
   flex-direction: row;
   justify-content: space-around;
   overflow:auto;
+  background-color: rgba(148, 181, 194, 0.75);
 }
 .m-content{
-  width: 80%;
-  margin-right: 10%;
+  width: 100%;
 }
 .side-bar-list{
  padding: 0;
@@ -125,5 +134,7 @@ footer {
   justify-content: space-between;
   flex-shrink: 1;
   align-items: center;
+  font-size: 1.6rem;
+  color: aliceblue;
 }
 </style>

@@ -17,21 +17,27 @@
           <option disabled class="curr-list-item">{{firstCurr}}</option>
           <option v-for="curr in currList" :key="curr.abr" class="curr-list-item">
             <div class="curr-list-item-div">
-              <country-flag :country='curr.flag' size='normal'/>
+              <country-flag :country='curr.flag' size='small'/>
               {{curr.abr}}
             </div>
           </option>
         </select>
+        <div class="user-input">
+          <input type="number" class="user-input-text" v-model="firstVal" @change="convertFirst"> 
+        </div>
       </div>
       <b-icon-arrow-repeat class="icon-size" @click="swapCurr"></b-icon-arrow-repeat>
       <div class="converter-item">
         <select v-model="secondCurr" class="curr-list">
-          <option disabled class="curr-list-item">{{selectedCurr}}</option>
+          <option disabled class="curr-list-item">{{secondCurr}}</option>
           <option v-for="curr in currList" :key="curr.abr" class="curr-list-item">
-            <country-flag :country='curr.flag' size='normal'/>
+            <country-flag :country='curr.flag' size='small'/>
             {{curr.abr}}
           </option>
         </select>
+        <div class="user-input" >
+          <input type="number" class="user-input-text" v-model="secVal">
+        </div>
       </div>
     </div>
   </div>
@@ -59,9 +65,11 @@ export default {
       currList: clist.currency,
       firstCurr: this.selectedCurr,
       url : 'https://api.exchangeratesapi.io/latest',
-      secondCurr: null,
+      secondCurr: this.selectedCurr,
       apiData: null,
       currRates: null,
+      firstVal: 1,
+      secVal: null,
     }
   },
   methods: {
@@ -89,8 +97,11 @@ export default {
       return strSpl.toLowerCase();
     },
     getKeysToObject(rateKey){
-      return this.apiData.rates[rateKey].toFixed(5);
-    }
+      return this.apiData.rates[rateKey].toFixed(2);
+    },
+    convertFirst(){
+      this.secVal = this.firstVal*this.apiData.rates[this.secondCurr];
+    },
   }
 }
 </script>
@@ -107,7 +118,9 @@ export default {
 
 }
 .converter-item{
-
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
 .icon-size{
   width: 12em;
@@ -118,7 +131,8 @@ export default {
   height: 4em;
 }
 .curr-list-item{
-
+  display: flex;
+  flex-direction: row;
 }
 .curr-list-item-div{
   display: flex;
@@ -127,9 +141,10 @@ export default {
 .converter-row{
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   justify-items: center;
   align-items: center;
+  background-color: rgba(42, 54, 70, 0.781);
 }
 .rates-list{
   flex-wrap: wrap;
@@ -138,11 +153,26 @@ export default {
 }
 .rates-list-item{
   width: 9%;
+  background-color: rgba(180, 180, 180, 0.525);
 }
 .rates-list-item-top{
   display: flex;
   flex-direction: column-reverse;
   justify-content: space-around;
   align-items: center;
+  font-size: 1.3rem;
+  color: aliceblue;
+}
+.rates-list-item-bot{
+  font-size: 1.3rem;
+  color: aliceblue;
+}
+.user-input{
+  
+}
+.user-input-text{
+  width: 12em;
+  height: 4em;
+  font-size: 1em;
 }
 </style>
