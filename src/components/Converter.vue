@@ -73,14 +73,19 @@ export default {
     }
   },
   methods: {
-    swapCurr(){
-      let temp = this.firstCurr;
-      this.firstCurr = this.secondCurr;
-      this.secondCurr = temp;
-    },
-    changeBase(){
+        changeBase(){
       this.$emit('changeBase',this.firstCurr);
     },
+    swapCurr(){
+      let temp = this.firstCurr;
+      let tempTemp= temp;
+      this.firstCurr = this.secondCurr;
+      this.secondCurr = tempTemp;
+      if(this.apiData.rates[this.secondCurr]==1){
+      this.apiData.rates[this.secondCurr]=this.apiData.rates[this.secondCurr] /this.apiData.rates[this.firstCurr];
+      }
+    },
+
     async getCurr() {
       const response = await fetch(this.url+"?base="+this.selectedCurr);
       console.log(this.url+"?base="+this.selectedCurr);
@@ -123,6 +128,7 @@ export default {
   flex-wrap: nowrap;
 }
 .icon-size{
+  color:rgb(22, 128, 31);
   width: 12em;
   height: 12em;
 }
@@ -176,3 +182,4 @@ export default {
   font-size: 1em;
 }
 </style>
+

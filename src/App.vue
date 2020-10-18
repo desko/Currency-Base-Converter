@@ -5,7 +5,7 @@
       <div class="header-banner"><img src="./banner.png" class="header-banner"></div>
     </header>
     <main class="content-box">
-      <div class="m-side-bar overflow-auto">
+      <div class="m-side-bar">
         <ul class="side-bar-list">
           <li v-for="curr in currList" :key="curr.abr" @click="setCurrency(curr.abr)" class="side-bar-list-item">
             <country-flag :country='curr.flag' size='normal'/>
@@ -64,7 +64,7 @@ html, body{
     height: 100%;
 }
 body{
-  background-image: url("./bck.jpg");
+  background-image: url("./background.jpg");
   background-size: cover;
   background-repeat:no-repeat;
 }
@@ -111,13 +111,17 @@ body{
   color: aliceblue;
 }
 .m-side-bar{
-  width: 10%;
+  width: 15%;
   height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  overflow:auto;
+  overflow:scroll;
   background-color: rgba(148, 181, 194, 0.75);
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
 }
 .m-content{
   width: 100%;
