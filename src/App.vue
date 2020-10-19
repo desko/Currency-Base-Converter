@@ -18,7 +18,7 @@
       </div>
     </main>
     <footer class="footer-main">
-      powered by: <a href="https://exchangeratesapi.io/">exchange rates api </a>/ Created by some debils
+      powered by: <a href="https://exchangeratesapi.io/">exchange rates api </a>/ Created by D. Dimitrov & V. Ivanov
     </footer>
   </div>
 </template>
@@ -118,13 +118,17 @@ body{
   justify-content: space-around;
   overflow:scroll;
   background-color: rgba(148, 181, 194, 0.75);
+  border-radius: 0px 25px 25px 0px;
 }
 ::-webkit-scrollbar {
     width: 0px;
     background: transparent; /* make scrollbar transparent */
 }
 .m-content{
-  width: 100%;
+  width: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .side-bar-list{
  padding: 0;

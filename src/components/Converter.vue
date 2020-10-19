@@ -1,12 +1,12 @@
 <template>
   <div class="converter">
-    <div class="container converter-row rates-list">
-      <div v-for="curr in currRates" :key="curr" class="rates-list-item">
-          <div class="rates-list-item-top border">
+    <div class="converter-row rates-list">
+      <div v-for="curr in currRates" :key="curr" class="rates-list-item border">
+          <div class="rates-list-item-top">
             {{curr}}
             <country-flag :country='sliceEnd(curr)' size='normal'/>
           </div>
-          <div class="rates-list-item-bot border">
+          <div class="rates-list-item-bot">
             {{getKeysToObject(curr)}}
           </div>
       </div>
@@ -22,11 +22,11 @@
             </div>
           </option>
         </select>
-        <div class="user-input">
-          <input type="number" class="user-input-text" v-model="firstVal" @change="convertFirst"> 
-        </div>
+        <input type="number" class="user-input-text" v-model="firstVal" @change="convertFirst"> 
       </div>
-      <b-icon-arrow-repeat class="icon-size" @click="swapCurr"></b-icon-arrow-repeat>
+      <div class="converter-item">
+        <b-icon-arrow-repeat class="icon-size" @click="swapCurr"></b-icon-arrow-repeat>
+      </div>
       <div class="converter-item">
         <select v-model="secondCurr" class="curr-list">
           <option disabled class="curr-list-item">{{secondCurr}}</option>
@@ -35,9 +35,7 @@
             {{curr.abr}}
           </option>
         </select>
-        <div class="user-input" >
-          <input type="number" class="user-input-text" v-model="secVal">
-        </div>
+        <input type="number" class="user-input-text" v-model="secVal">
       </div>
     </div>
   </div>
@@ -78,12 +76,14 @@ export default {
     },
     swapCurr(){
       let temp = this.firstCurr;
-      let tempTemp= temp;
       this.firstCurr = this.secondCurr;
-      this.secondCurr = tempTemp;
+      this.secondCurr = temp;
       if(this.apiData.rates[this.secondCurr]==1){
       this.apiData.rates[this.secondCurr]=this.apiData.rates[this.secondCurr] /this.apiData.rates[this.firstCurr];
       }
+      temp = this.firstVal;
+      this.firstVal = this.secVal;
+      this.secVal = temp;
     },
 
     async getCurr() {
@@ -116,25 +116,43 @@ export default {
 .converter{
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 80%;
+  width: 80%;
   justify-content: space-around;
   justify-items: center;
   align-items: center;
-
+  background-color: rgba(42, 54, 70, 0.781);
+  border-radius: 25px;
+}
+.converter-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
 }
 .converter-item{
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
 }
 .icon-size{
   color:rgb(22, 128, 31);
-  width: 12em;
-  height: 12em;
+  width: 50%;
+  height: 50%;
 }
 .curr-list{
-  width: 12em;
-  height: 4em;
+  width: 75%;
+  height: 40%;
+  border-radius: 25px 25px 0px 0px;
 }
 .curr-list-item{
   display: flex;
@@ -144,14 +162,6 @@ export default {
   display: flex;
   justify-content: space-between;
 }
-.converter-row{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  justify-items: center;
-  align-items: center;
-  background-color: rgba(42, 54, 70, 0.781);
-}
 .rates-list{
   flex-wrap: wrap;
   width: 100%;
@@ -160,6 +170,8 @@ export default {
 .rates-list-item{
   width: 9%;
   background-color: rgba(180, 180, 180, 0.525);
+  border-radius: 20% 20% 20% 20%;
+  color: aliceblue;
 }
 .rates-list-item-top{
   display: flex;
@@ -167,19 +179,22 @@ export default {
   justify-content: space-around;
   align-items: center;
   font-size: 1.3rem;
-  color: aliceblue;
+  border-radius: 20% 20% 0% 0%;
 }
 .rates-list-item-bot{
   font-size: 1.3rem;
-  color: aliceblue;
+  border-radius: 0% 0% 20% 20%;
 }
 .user-input{
   
 }
 .user-input-text{
-  width: 12em;
-  height: 4em;
-  font-size: 1em;
+  width: 75%;
+  height: 40%;
+  font-size: 100%;
+  display: flex;
+  justify-content: center;
+  border-radius:  0px 0px 25px 25px;
 }
 </style>
 
