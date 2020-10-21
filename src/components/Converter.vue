@@ -35,7 +35,7 @@
             {{curr.abr}}
           </option>
         </select>
-        <input type="number" class="user-input-text" v-model="secVal" @click="convertSecond">
+        <input type="number" class="user-input-text" v-model="secVal" @change="convertSecond">
       </div>
     </div>
   </div>
@@ -102,7 +102,6 @@ export default {
       this.secondCurr = this.$route.params.sName;
       this.firstVal = this.$route.params.sValue;
       this.secVal = this.$route.params.fValue;
-      console.log(this.firstVal,this.secVal);
       const response = await fetch(this.url+"?base="+this.selectedCurr);
       this.apiData = await response.json();
       this.getCurrKeynames();
@@ -131,7 +130,7 @@ export default {
 <style scoped>
 .converter{
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   height: 80%;
   width: 80%;
   justify-content: space-around;
@@ -159,6 +158,10 @@ export default {
   justify-content: center;
   align-items: center;
   border-radius: 25px;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
 }
 .icon-size{
   color:rgb(22, 128, 31);
@@ -211,6 +214,55 @@ export default {
   display: flex;
   justify-content: center;
   border-radius:  0px 0px 25px 25px;
+}
+@media only screen and (min-width: 280px) {
+  .converter{
+    height: 100%;
+    border-radius: 0px;
+  }
+  .rates-list{
+    border-radius: 0px;
+    overflow: auto;
+  }
+  .rates-list-item{
+    width: 32%;
+  }
+  .curr-list{
+    width: 100%;
+  }
+  .user-input-text{
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 760px) {
+  .converter{
+
+  }
+  .rates-list{
+    border-radius: 0px;
+    overflow: auto;
+  }
+  .rates-list-item{
+    width: 22%;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .converter{
+    border-radius: 25px;
+    height: 95%;
+
+  }
+  .rates-list-item{
+    width: 9%;
+    overflow: hidden;
+  }
+  
+  .curr-list{
+    width: 75%;
+  }
+  .user-input-text{
+    width: 75%;
+  }
 }
 </style>
 
