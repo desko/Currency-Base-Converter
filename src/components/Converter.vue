@@ -235,13 +235,6 @@ export default {
   }
 }
 @media only screen and (min-width: 760px) {
-  .converter{
-
-  }
-  .rates-list{
-    border-radius: 0px;
-    overflow: auto;
-  }
   .rates-list-item{
     width: 22%;
   }
@@ -256,7 +249,6 @@ export default {
     width: 9%;
     overflow: hidden;
   }
-  
   .curr-list{
     width: 75%;
   }

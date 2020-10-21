@@ -75,11 +75,29 @@ export default {
     },
 
     swapCurrency(data){
-      this.$router.push('/currency/'+data.fCurr+'/'+data.sVal.toString()+'/to/'+data.sCurr+'/'+data.fVal.toString()).catch(()=>{});
+      this.$router.push('/currency/'+data.fCurr+'/'+data.sVal.toString()+'/to/'+data.sCurr+'/'+data.fVal.toString()).catch(err => {
+    // Ignore the vuex err regarding  navigating to the page they are already on.
+    if (
+      err.name !== 'NavigationDuplicated' &&
+      !err.message.includes('Avoided redundant navigation to current location')
+    ) {
+      // But print any other errors to the console
+      logError(err);
+    }
+  });
       this.componentKey++;
     },
     goHome(){
-      this.$router.push('/').catch(()=>{});
+      this.$router.push('/').catch(err => {
+    // Ignore the vuex err regarding  navigating to the page they are already on.
+    if (
+      err.name !== 'NavigationDuplicated' &&
+      !err.message.includes('Avoided redundant navigation to current location')
+    ) {
+      // But print any other errors to the console
+      logError(err);
+    }
+  });
     },
   }
 }
