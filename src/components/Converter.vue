@@ -35,7 +35,7 @@
             {{curr.abr}}
           </option>
         </select>
-        <input type="number" class="user-input-text" v-model="secVal">
+        <input type="number" class="user-input-text" v-model="secVal" @click="convertSecond">
       </div>
     </div>
   </div>
@@ -49,50 +49,63 @@ export default {
   mounted(){
     this.getCurr();
   },
-  props: {
+  watch: {
+    '$route' () {
+    this.getCurr();
+    }
+  },
+  /*props: {
     selectedCurr: {
       type: String,
       required: true
     },
-  },
+  },*/
   components: {
     CountryFlag,
   },
   data(){
     return{
       currList: clist.currency,
-      firstCurr: this.selectedCurr,
+      selectedCurr: null,
+      firstCurr: null,
       url : 'https://api.exchangeratesapi.io/latest',
-      secondCurr: this.selectedCurr,
+      secondCurr: null,
       apiData: null,
       currRates: null,
-      firstVal: 1,
+      firstVal: null,
       secVal: null,
     }
   },
   methods: {
-        changeBase(){
+    changeBase(){
       this.$emit('changeBase',this.firstCurr);
     },
     swapCurr(){
       let temp = this.firstCurr;
       this.firstCurr = this.secondCurr;
       this.secondCurr = temp;
-      if(this.apiData.rates[this.secondCurr]==1){
-      this.apiData.rates[this.secondCurr]=this.apiData.rates[this.secondCurr] /this.apiData.rates[this.firstCurr];
-      }
-      temp = this.firstVal;
+      let temp2 = this.firstVal;
       this.firstVal = this.secVal;
-      this.secVal = temp;
+      this.secVal = temp2;
+      let data = {
+        fCurr: this.firstCurr,
+        sCurr: this.secondCurr,
+        fVal:  this.firstVal*1.00,
+        sVal:  this.secVal*1.00,
+      }
+      this.$emit('swapCurrency', data);
     },
 
     async getCurr() {
+      this.selectedCurr = this.$route.params.fName;
+      this.firstCurr = this.$route.params.fName;
+      this.secondCurr = this.$route.params.sName;
+      this.firstVal = this.$route.params.sValue;
+      this.secVal = this.$route.params.fValue;
+      console.log(this.firstVal,this.secVal);
       const response = await fetch(this.url+"?base="+this.selectedCurr);
-      console.log(this.url+"?base="+this.selectedCurr);
       this.apiData = await response.json();
-      //this.currRates = Object.keys(this.apiData.rates);
       this.getCurrKeynames();
-      console.log(this.apiData);
     },
     getCurrKeynames(){
       this.currRates = Object.keys(this.apiData.rates);
@@ -106,6 +119,9 @@ export default {
     },
     convertFirst(){
       this.secVal = this.firstVal*this.apiData.rates[this.secondCurr];
+    },
+    convertSecond(){
+      this.firstVal = this.secVal/this.apiData.rates[this.secondCurr];
     },
   }
 }
