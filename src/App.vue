@@ -7,7 +7,7 @@
         <div class="header-btn" @click="goHome">
           Home
         </div>
-        <div class="header-btn">
+        <div class="header-btn" @click="goAbout">
           About
         </div>
         <div class="header-btn-select header-btn">
@@ -82,7 +82,7 @@ export default {
       !err.message.includes('Avoided redundant navigation to current location')
     ) {
       // But print any other errors to the console
-      logError(err);
+      this.logError(err);
     }
   });
       this.componentKey++;
@@ -95,7 +95,19 @@ export default {
       !err.message.includes('Avoided redundant navigation to current location')
     ) {
       // But print any other errors to the console
-      logError(err);
+      this.logError(err);
+    }
+  });
+    },
+    goAbout(){
+      this.$router.push('/About').catch(err => {
+    // Ignore the vuex err regarding  navigating to the page they are already on.
+    if (
+      err.name !== 'NavigationDuplicated' &&
+      !err.message.includes('Avoided redundant navigation to current location')
+    ) {
+      // But print any other errors to the console
+      this.logError(err);
     }
   });
     },
